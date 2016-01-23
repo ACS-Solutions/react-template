@@ -1,0 +1,33 @@
+
+@import 'variables/theme.css';
+
+.buttonClass {
+	margin: 2px;
+	padding: 2px;
+	background: none;
+	border: none;
+	border-radius: 100% 100%;
+	color: var(--theme-action);
+	cursor: pointer;
+	text-align: center;
+	vertical-align: middle;
+	font-size: 24px;
+	width: 24px;
+	height: 24px;
+	&.disabled {
+		color: color( var(--theme-action)  s(0) l(-15%) );
+	}
+	&:not(.disabled) {
+		&:focus { outline: none; }
+		&:hover {
+			text-shadow:
+				-1px -1px 0px var(--theme-glow),
+				 1px  1px 0px var(--theme-shadow);
+			transform: scale(1.2);
+			border-radius: 50%;
+			&:active {
+				transform: scale(0.9);
+			}
+		}
+	}
+}

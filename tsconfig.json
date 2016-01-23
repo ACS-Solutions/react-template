@@ -1,0 +1,20 @@
+{
+	"compilerOptions": {
+		"module": "amd",
+		"sourceMap": false,
+		"target": "es6",
+		"jsx": "preserve",
+		"listFiles": true,
+		"moduleResolution": "classic",
+		"rootDir": "src",
+		"noImplicitAny": false
+	},
+	"compileOnSave": false,
+	"exclude": [
+		"node_modules",
+		"deploy"
+	],
+	"atom": {
+		"rewriteTsconfig": false
+	}
+}

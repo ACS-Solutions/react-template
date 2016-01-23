@@ -1,0 +1,63 @@
+{
+  "version": "v4",
+  "repo": "borisyankov/DefinitelyTyped",
+  "ref": "master",
+  "path": "src/typings/tsd",
+  "bundle": "src/typings/tsd.d.ts",
+  "installed": {
+    "requirejs/require.d.ts": {
+      "commit": "421d6610bdb09e1015b71f5991d7a68d079eca21"
+    },
+    "jquery/jquery.d.ts": {
+      "commit": "421d6610bdb09e1015b71f5991d7a68d079eca21"
+    },
+    "redux/redux.d.ts": {
+      "commit": "efd40e67ff323f7147651bdbef03c03ead7b1675"
+    },
+    "react/react.d.ts": {
+      "commit": "efd40e67ff323f7147651bdbef03c03ead7b1675"
+    },
+    "react-redux/react-redux.d.ts": {
+      "commit": "efd40e67ff323f7147651bdbef03c03ead7b1675"
+    },
+    "react/react-global.d.ts": {
+      "commit": "efd40e67ff323f7147651bdbef03c03ead7b1675"
+    },
+    "react/react-addons-transition-group.d.ts": {
+      "commit": "efd40e67ff323f7147651bdbef03c03ead7b1675"
+    },
+    "react/react-addons-create-fragment.d.ts": {
+      "commit": "efd40e67ff323f7147651bdbef03c03ead7b1675"
+    },
+    "react/react-dom.d.ts": {
+      "commit": "efd40e67ff323f7147651bdbef03c03ead7b1675"
+    },
+    "react/react-addons-linked-state-mixin.d.ts": {
+      "commit": "efd40e67ff323f7147651bdbef03c03ead7b1675"
+    },
+    "react/react-addons-perf.d.ts": {
+      "commit": "efd40e67ff323f7147651bdbef03c03ead7b1675"
+    },
+    "react/react-addons-pure-render-mixin.d.ts": {
+      "commit": "efd40e67ff323f7147651bdbef03c03ead7b1675"
+    },
+    "react/react-addons-test-utils.d.ts": {
+      "commit": "efd40e67ff323f7147651bdbef03c03ead7b1675"
+    },
+    "react/react-addons-css-transition-group.d.ts": {
+      "commit": "efd40e67ff323f7147651bdbef03c03ead7b1675"
+    },
+    "react/react-addons-update.d.ts": {
+      "commit": "efd40e67ff323f7147651bdbef03c03ead7b1675"
+    },
+    "underscore/underscore.d.ts": {
+      "commit": "984a41af67d76b5134e0d4991a30f813dfb8561f"
+    },
+    "react-router/react-router.d.ts": {
+      "commit": "7fffbd3e040a93c244777e3be04cd6223ac69301"
+    },
+    "react-router/history.d.ts": {
+      "commit": "7fffbd3e040a93c244777e3be04cd6223ac69301"
+    }
+  }
+}

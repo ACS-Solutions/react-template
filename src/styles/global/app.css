@@ -1,0 +1,31 @@
+
+@import 'variables/theme.css';
+
+
+body {
+	margin: 10px;
+	background: var(--theme-bg);
+	color: var(--theme-text);
+}
+
+a {
+	color: var(--theme-anchor);
+	text-decoration: none;
+	&:visited {
+		color: var(--theme-anchor-visited);
+	}
+}
+
+th, td {
+	padding: 6px 10px;
+}
+
+
+@import './controls.css';
+
+
+.appmain {
+	max-width: 600px;
+	margin-left: auto;
+	margin-right: auto;
+}

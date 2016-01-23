@@ -1,0 +1,25 @@
+
+@import 'variables/theme.css';
+
+.todoList {
+	margin-top: 0;
+	& .todoItem {
+		margin: 3px;
+		list-style: none;
+		border-radius: 1em;
+		cursor: pointer;
+		& input {
+			margin-left: var(--spacing-control-label);
+			margin-right: var(--spacing-control-label);
+		}
+		&.selected {
+			background: var(--theme-selection);
+		}
+		&.done {
+			text-decoration: line-through;
+		}
+	}
+	& :global(.fa-times) {
+		color: var(--theme-danger);
+	}
+}

@@ -1,0 +1,12 @@
+
+@import 'variables/theme.css';
+
+
+:root {
+
+	--thead-bg: var(--theme-header-bg);
+	--thead-sortable: color( var(--theme-header-bg)  l(var(--theme-select-lighten)) );
+	--tbody-bg: var(--theme-anchor-bg);
+	--tbody-clickable: color( var(--theme-anchor-bg)  l(var(--theme-select-lighten)) );
+
+}

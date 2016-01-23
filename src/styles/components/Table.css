@@ -1,0 +1,37 @@
+
+@import 'variables/theme.css';
+@import 'variables/tables.css';
+
+
+.table {
+	& thead {
+		& tr {
+			background: var(--thead-bg);
+		}
+		& th:first-child {
+			border-top-left-radius: var(--theme-border-radius);
+		}
+		& th:last-child {
+			border-top-right-radius: var(--theme-border-radius);
+		}
+		& th.sortable:hover {
+			background: var(--thead-sortable);
+			cursor: pointer;
+		}
+	}
+	& tbody {
+		& tr {
+			background: var(--tbody-bg);
+			&:nth-child(even) {
+				background: color( var(--tbody-bg)  hue(+30) );
+			}
+		}
+		&.clickable tr:hover {
+			cursor: pointer;
+			background: var(--tbody-clickable);
+			&:nth-child(even) {
+				background: color( var(--tbody-clickable)  hue(+30) );
+			}
+		}
+	}
+}

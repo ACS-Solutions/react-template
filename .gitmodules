@@ -1,0 +1,4 @@
+[submodule "submodules/seamless-immutable"]
+	path = submodules/seamless-immutable
+	url = git@github.com:mikemagnusw/seamless-immutable.git
+	branch = proto

@@ -1,0 +1,75 @@
+
+@import 'variables/theme.css';
+
+:root {
+	--highlight: 1px solid color( var(--theme-header-bg)  l(+20%) );
+	--darklight: 1px solid color( var(--theme-header-bg)  l(-20%) );
+}
+
+@simple-mixin-define raised {
+	border-top:    var(--highlight);
+	border-left:   var(--highlight);
+	border-bottom: var(--darklight);
+	border-right:  var(--darklight);
+}
+
+@simple-mixin-define sunken {
+	border-top:    var(--darklight);
+	border-left:   var(--darklight);
+	border-bottom: var(--highlight);
+	border-right:  var(--highlight);
+}
+
+@simple-mixin-define focus {
+	border-top:    1px solid color( var(--theme-highlight)  l(+10%) );
+	border-bottom: 1px solid color( var(--theme-highlight)  l(-10%) );
+}
+
+.panel {
+	margin-bottom: 20px;
+	padding: var(--theme-border-radius-small);
+	background: var(--theme-header-bg);
+	border-radius: var(--theme-border-radius);
+	@simple-mixin-include sunken;
+	&.raised {
+		background: var(--theme-bg);
+		@simple-mixin-include raised;
+	}
+}
+
+.button {
+	display: inline-block;
+	padding: var(--theme-border-radius-small);
+	background: color( var(--theme-header-bg) l(+5%) );
+	border-radius: var(--theme-border-radius-small);
+	color: var(--theme-text);
+	@simple-mixin-include raised;
+	cursor: pointer;
+	&:active {
+		background: color( var(--theme-header-bg) l(-5%) );
+		@simple-mixin-include sunken;
+	}
+	&:hover, &.active {
+		background: color( var(--theme-header-bg)  l(var(--theme-select-lighten)) );
+	}
+	&:focus {
+		@simple-mixin-include: focus;
+	}
+}
+
+input[type=text] {
+	margin-left: var(--spacing-control-label);
+	margin-right: var(--spacing-control-label);
+	padding: var(--theme-border-radius-small);
+	border-radius: var(--theme-border-radius-small);
+	@simple-mixin-include sunken;
+	&:focus {
+		@simple-mixin-include: focus;
+		outline: none;
+	}
+}
+
+input[type=checkbox] {
+	transform: scale(1.2);
+	cursor: pointer;
+}

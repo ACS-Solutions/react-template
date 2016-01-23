@@ -1,0 +1,8 @@
+/node_modules/
+.babel/
+/dist/
+
+/tsconfig.webpack.json
+
+/src/typings/tsd.d.ts
+/src/typings/tsd/
