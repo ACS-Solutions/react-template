@@ -6,8 +6,8 @@
   "scripts": {
     "test": "true"
   },
-  "author": "Perkins",
-  "license": "",
+  "author": "Author",
+  "license": "MIT",
   "dependencies": {
     "babel-runtime": "^6.3.19",
     "content-type": "^1.0.1",
