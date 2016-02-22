@@ -1,7 +1,7 @@
 
 import * as React from 'react';
 import { map, sortBy } from 'underscore';
-import StyledComponent from 'components/StyledComponent';
+import { renderWithStylesheet } from 'components/Stylesheet';
 
 
 interface ColumnSpec<TValue> {
@@ -12,7 +12,9 @@ interface ColumnSpec<TValue> {
 }
 
 
-interface Props<TValue> {
+interface Props<TValue>
+	extends React.Props<ListView<TValue>>
+{
 	className?: string;
 	columns: ColumnSpec<TValue>[];
 	values: TValue[];
@@ -34,7 +36,7 @@ interface Styles {
 
 
 export class ListView<TValue>
-	extends StyledComponent<Styles, Props<TValue>, State>
+	extends React.Component<Props<TValue>, State>
 {
 
 	constructor( props:Props<TValue> ) {
@@ -44,38 +46,41 @@ export class ListView<TValue>
 		};
 	}
 
-	get UsableStyles() { return require( 'styles/components/Table.css' ); }
-
 	render() {
-		return React.DOM.table({
-			className: [
-				this.props.className,
-				this.LocalStyles.table
-			].join( ' ' )
-		},
-			React.DOM.thead( null,
-				React.DOM.tr( null, ...map(
-					this.props.columns,
-					( column, column_index ) => React.DOM.th({
-						className: [
-							column.className,
-							column.comparison && this.LocalStyles.sortable || undefined
-						].join( ' ' ),
-						onClick: column.comparison && (() => this.sortColumn( column_index + 1 ))
-					}, column.heading )
-				))
-			),
-			React.DOM.tbody({
-				className: this.props.onClick && this.LocalStyles.clickable
-			}, ...map(
-				this.sortValues( this.props.values ),
-				item => React.DOM.tr({
-					onClick: this.props.onClick && (() => this.props.onClick( item ))
-				}, ...map(
-					this.props.columns,
-					column => React.DOM.td({ className: column.className }, column.render( item ))
-				))
-			))
+		return renderWithStylesheet<Styles>(
+			require( 'styles/components/Table.css' ),
+			locals => (
+				<table
+					className={[
+						this.props.className,
+						locals.table
+					].join( ' ' )}
+				>
+					<thead>
+						<tr>...{ map(
+							this.props.columns,
+							( column, column_index ) => <th
+								className={[
+									column.className,
+									column.comparison && locals.sortable || undefined
+								].join( ' ' )}
+								onClick={ column.comparison && (() => this.sortColumn( column_index + 1 )) }
+							>{ column.heading }</th>
+						)}</tr>
+					</thead>
+					<tbody className={ this.props.onClick && locals.clickable }>
+						...{ map(
+							this.sortValues( this.props.values ),
+							item => <tr onClick={ this.props.onClick && (() => this.props.onClick( item )) }>
+								...{ map(
+									this.props.columns,
+									column => <td className={ column.className }>{ column.render( item ) }</td>
+								)}
+							</tr>
+						)}
+					</tbody>
+				</table>
+			)
 		);
 	}
 
@@ -104,6 +109,7 @@ export class ListView<TValue>
 	}
 
 }
+
 
 export default ListView;
 

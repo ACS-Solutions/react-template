@@ -1,6 +1,7 @@
 
+import { Component, Props } from 'react';
 import Link from 'react-router/lib/Link';
-import StyledComponent from 'components/StyledComponent';
+import { renderWithStylesheet } from 'components/Stylesheet';
 
 
 interface Styles {
@@ -9,17 +10,18 @@ interface Styles {
 
 
 export default class Navbar
-	extends StyledComponent<Styles, React.Props<void>, void>
+	extends Component<Props<Navbar>, void>
 {
 
-	get UsableStyles() { return require( 'styles/components/Navbar.css' ); }
-
 	render() {
-		return (
-			<nav className={ [ 'panel', this.LocalStyles.nav ].join( ' ' ) }>
-				<Link className='button' activeClassName='active' to='/'>/</Link>
-				<Link className='button' activeClassName='active' to='/todo'>Todos</Link>
-			</nav>
+		return renderWithStylesheet<Styles>(
+			require( 'styles/components/Navbar.css' ),
+			locals => (
+				<nav className={ [ 'panel', locals.nav ].join( ' ' ) }>
+					<Link className='button' activeClassName='active' to='/'>/</Link>
+					<Link className='button' activeClassName='active' to='/todo'>Todos</Link>
+				</nav>
+			)
 		);
 	}
 

@@ -1,7 +1,7 @@
 
 import * as React from 'react';
 import { Link } from 'react-router';
-import StyledComponent from 'components/StyledComponent';
+import { renderWithStylesheet } from 'components/Stylesheet';
 
 
 interface Props
@@ -23,19 +23,18 @@ interface Styles {
 
 
 export class IconButton
-	extends StyledComponent<Styles, Props, void>
+	extends React.Component<Props, void>
 {
 
-	get UsableStyles() { return require( 'styles/components/IconButton.css' ); }
-
 	render() {
-		return (
-			<Link
+		return renderWithStylesheet<Styles>(
+			require( 'styles/components/IconButton.css' ),
+			locals => <Link
 				className={[
-					this.LocalStyles.buttonClass,
+					locals.buttonClass,
 					'fa',
 					'fa-' + this.props.fa_class,
-					this.props.disabled ? this.LocalStyles.disabled : null
+					this.props.disabled ? locals.disabled : null
 				].join( ' ' ).trim() }
 				disabled={ this.props.disabled }
 				style={ !this.props.disabled && this.props.color && { color: this.props.color } || null }
@@ -52,5 +51,6 @@ export class IconButton
 	}
 
 }
+
 
 export default IconButton;

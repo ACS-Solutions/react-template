@@ -4,12 +4,14 @@ import { Dispatch } from 'redux';
 import { isNumber, some } from 'underscore';
 import { State as libState } from 'lib/State';
 import IconButton from 'components/IconButton';
-import StyledComponent from 'components/StyledComponent';
+import { renderWithStylesheet } from 'components/Stylesheet';
 import Global from 'state/Global';
 import { ITodo, Todos } from 'state/Todos';
 
 
-interface Props {
+interface Props
+	extends React.Props<TodosPage>
+{
 	dispatch: Dispatch;
 	todos: Todos;
 }
@@ -30,7 +32,7 @@ interface Styles {
 
 
 export class TodosPage
-	extends StyledComponent<Styles, Props, State>
+	extends React.Component<Props, State>
 {
 
 	constructor( props:Props ) {
@@ -39,8 +41,6 @@ export class TodosPage
 			new_input: ''
 		};
 	}
-
-	get UsableStyles() { return require( 'styles/pages/Todos.css' ); }
 
 	private get canSaveInput( ):boolean {
 		let can = !!this.state.new_input.trim();
@@ -67,68 +67,71 @@ export class TodosPage
 	}
 
 	render() {
-		return (
-			<div className={ [ 'panel', this.LocalStyles.todoList ].join( ' ' ) }>
-				<h3>To do or not to do...</h3>
-				<ul className='panel raised'> {
-					this.props.todos.map( this.renderTodo.bind( this ))
-				} </ul>
-				<form onSubmit={ fev => {
-					fev.preventDefault();
-					if (this.canSaveInput)
-						this.SaveInput( fev );
-				}}>
-					<label>
-						{ isNumber( this.state.selection )
-							? `Item ${this.state.selection + 1}:`
-							: 'New:' }
-						<input
-							id='new-name' type='text' name='name'
-							value={ this.state.new_input }
-							onChange={ e => this.setState({ new_input: (e.target as HTMLInputElement).value }) }/>
-					</label>
-					<IconButton
-						title='Save'
-						fa_class='check-square-o'
-						disabled={ !this.canSaveInput }
-						onClick={ this.SaveInput.bind(this) }
-					/>
-					<IconButton
-						title='Delete'
-						fa_class='times'
-						disabled={ !isNumber( this.state.selection ) }
-						onClick={ mev => {
-							this.props.dispatch( this.props.todos.Remove( this.state.selection ));
-							this.ClearState();
-						}}
-					/>
-					<IconButton
-						title='Cleanup'
-						fa_class='trash-o'
-						disabled={ !this.props.todos.any( item => item.done ) }
-						onClick={ mev => {
-							this.ClearState();
-							const completed = this.props.todos
-								.map( ( item, index ) => ({ item, index }) )
-								.filter( desc => desc.item.done )
-								.map( desc => desc.index );
-							while (completed.length) {
-								this.props.dispatch( this.props.todos.Remove( completed.pop() ));
-							}
-						}}
-					/>
-				</form>
-			</div>
+		return renderWithStylesheet<Styles>(
+			require( 'styles/pages/Todos.css' ),
+			locals => (
+				<div className={ [ 'panel', locals.todoList ].join( ' ' ) }>
+					<h3>To do or not to do...</h3>
+					<ul className='panel raised'>{
+						this.props.todos.map( this.renderTodo.bind( this, locals ))
+					}</ul>
+					<form onSubmit={ fev => {
+						fev.preventDefault();
+						if (this.canSaveInput)
+							this.SaveInput( fev );
+					}}>
+						<label>
+							{ isNumber( this.state.selection )
+								? `Item ${this.state.selection + 1}:`
+								: 'New:' }
+							<input
+								id='new-name' type='text' name='name'
+								value={ this.state.new_input }
+								onChange={ e => this.setState({ new_input: (e.target as HTMLInputElement).value }) }/>
+						</label>
+						<IconButton
+							title='Save'
+							fa_class='check-square-o'
+							disabled={ !this.canSaveInput }
+							onClick={ this.SaveInput.bind(this) }
+						/>
+						<IconButton
+							title='Delete'
+							fa_class='times'
+							disabled={ !isNumber( this.state.selection ) }
+							onClick={ mev => {
+								this.props.dispatch( this.props.todos.Remove( this.state.selection ));
+								this.ClearState();
+							}}
+						/>
+						<IconButton
+							title='Cleanup'
+							fa_class='trash-o'
+							disabled={ !this.props.todos.any( item => item.done ) }
+							onClick={ mev => {
+								this.ClearState();
+								const completed = this.props.todos
+									.map( ( item, index ) => ({ item, index }) )
+									.filter( desc => desc.item.done )
+									.map( desc => desc.index );
+								while (completed.length) {
+									this.props.dispatch( this.props.todos.Remove( completed.pop() ));
+								}
+							}}
+						/>
+					</form>
+				</div>
+			)
 		);
 	}
 
-	renderTodo( todo:ITodo, index:number) {
+	renderTodo( locals:Styles, todo:ITodo, index:number) {
 		return (
 			<li
 				className={
-					[ this.LocalStyles.todoItem,
-						(this.state.selection === index) ? this.LocalStyles.selected : null,
-						todo.done ? this.LocalStyles.done : null
+					[ locals.todoItem,
+						(this.state.selection === index) ? locals.selected : null,
+						todo.done ? locals.done : null
 					].join( ' ' ).trim()
 				}
 				key={ index }
