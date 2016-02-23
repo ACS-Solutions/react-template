@@ -19,7 +19,7 @@ export class Todos
 		]);
 	}
 
-	public setName( index:number, name:string ):{} {
+	public setName( index:number, name:string ) {
 		return super.Set( index, { done: this.values[index].done, name });
 	}
 

@@ -1,6 +1,6 @@
 
 import { Component, Props } from 'react';
-import Link from 'react-router/lib/Link';
+import { Link } from 'react-router';
 import { renderWithStylesheet } from 'components/Stylesheet';
 
 

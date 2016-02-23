@@ -1,5 +1,6 @@
 
 @import 'variables/theme.css';
+@import './controls.css';
 
 
 body {
@@ -19,9 +20,6 @@ a {
 th, td {
 	padding: 6px 10px;
 }
-
-
-@import './controls.css';
 
 
 .appmain {

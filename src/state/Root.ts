@@ -3,13 +3,13 @@ import { State, List } from 'lib/State';
 import Todos from 'state/Todos';
 
 
-interface IGlobal {
+interface IRoot {
 	Todos: Todos;
 }
 
 
-export default class Global
-	extends State<IGlobal>
+export default class Root
+	extends State<IRoot>
 {
 
 	constructor() {

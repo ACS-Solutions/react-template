@@ -1,18 +1,18 @@
 
 import * as React from 'react';
-import { Dispatch } from 'redux';
+import { IDispatch } from 'redux';
 import { isNumber, some } from 'underscore';
 import { State as libState } from 'lib/State';
 import IconButton from 'components/IconButton';
 import { renderWithStylesheet } from 'components/Stylesheet';
-import Global from 'state/Global';
+import IReduxRoot from 'app/ReduxRoot';
 import { ITodo, Todos } from 'state/Todos';
 
 
 interface Props
 	extends React.Props<TodosPage>
 {
-	dispatch: Dispatch;
+	dispatch: IDispatch;
 	todos: Todos;
 }
 
@@ -167,4 +167,4 @@ export class TodosPage
 }
 
 
-export default libState.connect<Global, Props>( global => ({ todos: global.Todos }), TodosPage );
+export default libState.connect( ( root:IReduxRoot ) => ({ todos: root.app.Todos }), TodosPage );

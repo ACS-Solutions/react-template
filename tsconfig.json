@@ -11,8 +11,10 @@
 	},
 	"compileOnSave": false,
 	"exclude": [
+		"dist",
 		"node_modules",
-		"deploy"
+		"typings/main",
+		"typings/main.d.ts"
 	],
 	"atom": {
 		"rewriteTsconfig": false

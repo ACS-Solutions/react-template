@@ -35,9 +35,9 @@ var paths = {
 		'src/app/index.html'
 	],
 	tsd_files: [
-		'src/typings/tsd.d.ts',
 		'src/typings/lib.d.ts',
-		'src/typings/app.d.ts'
+		'src/typings/app.d.ts',
+		'typings/browser.d.ts'
 	],
 	build_dir: 'dist'
 };

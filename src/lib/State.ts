@@ -6,7 +6,6 @@ import * as _ from 'underscore';
 import { Immutable, ImmutableList, isImmutable } from 'lib/Immutable';
 
 const _create = require( 'underscore' ).create
-const storeShape = require( 'react-redux/lib/utils/storeShape' );
 
 
 export interface StateConstructor<TState extends State<any>> {
@@ -27,10 +26,10 @@ export class State<TValues> {
 	}
 
 	public static connect<
-		TState extends State<any>,
-		TProps extends { dispatch: Redux.Dispatch }
+		TRoot,
+		TProps extends { dispatch: Redux.IDispatch }
 	>(
-		mapStateToProps:( root:TState ) => any,
+		mapStateToProps:( root:TRoot ) => { },
 		component:React.ComponentClass<TProps>
 	):React.ComponentClass<TProps>
 	{
@@ -47,15 +46,15 @@ export class State<TValues> {
 
 			static get contextTypes() {
 				return {
-					store: storeShape
-				};
+					store: require( 'react-redux/lib/utils/storeShape' )
+				} as React.ValidationMap<any>;
 			}
 
-			public get dispatch( ):Redux.Dispatch {
+			public get dispatch( ):Redux.IDispatch {
 				return this.store.dispatch;
 			}
 
-			private get store( ):Redux.Store {
+			private get store( ):Redux.IStore<TRoot> {
 				return (this.context as any).store;
 			}
 
@@ -82,9 +81,8 @@ export class State<TValues> {
 				return React.createElement( component, merged_props );
 			}
 
-			private computeState( context ) {
-				const app_state = context.store.getState().application;
-				return mapStateToProps( app_state );
+			private computeState( context ):TProps {
+				return mapStateToProps( context.store.getState() ) as TProps;
 			}
 
 			private updateState( ) {
@@ -101,7 +99,7 @@ export class State<TValues> {
 
 			private subscribeStore() {
 				if (!this.unsubscribeStore) {
-					this.unsubscribeStore = ((this.context as any).store as Redux.Store).subscribe(() => {
+					this.unsubscribeStore = ((this.context as any).store as Redux.IStore<TRoot>).subscribe(() => {
 						if (this.unsubscribeStore)
 							this.updateState();
 					});
@@ -110,10 +108,10 @@ export class State<TValues> {
 			}
 
 		}
-		return Wrapper as any as React.ComponentClass<TProps>;
+		return Wrapper;
 	}
 
-	public static reducer<TState extends State<any>>( cstate:StateConstructor<TState> ):Redux.Reducer {
+	public static reducer<TState extends State<any>>( cstate:StateConstructor<TState> ):Redux.IReducer<TState> {
 		return ( state:any, action:{ type:string, payload:any } ) => {
 			return log( "State::reducer()", () => {
 				// decode path
@@ -166,7 +164,7 @@ export class State<TValues> {
 		return true;
 	}
 
-	protected Action( member:string, method:string, payload?:any ):{} {
+	protected Action( member:string, method:string, payload?:any ):Redux.IAction {
 		const action = Immutable({
 			type: [ null ].concat( this._path, member, method ).join( '/' ),
 			payload
@@ -325,15 +323,15 @@ export class List<TValue>
 		return Array.prototype.map.call( this.values, cb );
 	}
 
-	public Append( item:TValue ):{} {
+	public Append( item:TValue ):Redux.IAction {
 		return this.Action( null, 'add', item );
 	}
 
-	public Remove( index:number ):{} {
+	public Remove( index:number ):Redux.IAction {
 		return this.Action( null, 'remove', index );
 	}
 
-	public Set( index:number, item:TValue ):{} {
+	public Set( index:number, item:TValue ):Redux.IAction {
 		return this.Action( null, 'set', { index, item } );
 	}
 
@@ -383,11 +381,11 @@ export class Map<TValue>
 		return _.values( this.values );
 	}
 
-	public MergeValues( values?:{ [ key:string ]:TValue } ):{} {
+	public MergeValues( values?:{ [ key:string ]:TValue } ):Redux.IAction {
 		return this.Action( 'values', 'merge', values );
 	}
 
-	public RemoveKeys( keys?:string[] ):{} {
+	public RemoveKeys( keys?:string[] ):Redux.IAction {
 		return this.Action( 'values', 'remove', keys );
 	}
 
